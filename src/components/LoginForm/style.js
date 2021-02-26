@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
 export const Login = styled.section`
-  width: 300px;
-
   label {
     display: block;
     margin-bottom: 10px;
