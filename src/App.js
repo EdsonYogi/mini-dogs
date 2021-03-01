@@ -2,9 +2,9 @@ import React from "react";
 import Main from "./main/";
 import GlobalStyle from "./GlobalStyle";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faEye, faPaw } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faPaw, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faEye, faPaw);
+library.add(faEye, faPaw, faSignOutAlt);
 
 function App() {
   return (

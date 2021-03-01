@@ -9,7 +9,16 @@ export const Content = styled.div`
   margin: 0 auto;
 `;
 
-export const Title = styled.h1`
-  font-size: 25px;
+export const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 30px;
+
+  h1 {
+    font-size: 25px;
+  }
+
+  button {
+    padding: 10px;
+  }
 `;

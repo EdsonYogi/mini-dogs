@@ -22,6 +22,8 @@ export const login = (user) => async (dispatch) => {
   } catch (error) {}
 };
 
+export const logout = () => async (dispatch) => {};
+
 const reducer = combineReducers({
   user: user.reducer,
   token: token.reducer,
