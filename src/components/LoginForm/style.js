@@ -15,6 +15,10 @@ export const Login = styled.section`
     padding: 7.5px;
   }
 
+  .infoUser {
+    margin-bottom: 20px;
+  }
+
   .login {
     height: 50px;
     font-size: 18px;

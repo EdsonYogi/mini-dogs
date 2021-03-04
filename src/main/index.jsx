@@ -80,6 +80,8 @@ const Main = () => {
               onSubmit={handleSubmit}
               setUsername={setUsername}
               setPassword={setPassword}
+              username={username}
+              password={password}
             />
           </Fragment>
         ) : (
