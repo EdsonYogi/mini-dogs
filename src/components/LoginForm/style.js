@@ -14,21 +14,11 @@ export const Login = styled.section`
     border-radius: 5px;
     padding: 7.5px;
   }
-  button {
-    border: 2px solid black;
-    border-radius: 5px;
-    padding: 10px 20px;
-    background-color: black;
-    font-weight: bold;
-    color: white;
-    letter-spacing: 2px;
-    transition-duration: 0.5s;
-    cursor: pointer;
 
-    &:hover {
-      color: black;
-      background-color: white;
-    }
+  .login {
+    height: 50px;
+    font-size: 18px;
+    padding: 0 25px;
   }
 `;
 

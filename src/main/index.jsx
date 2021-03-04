@@ -1,10 +1,12 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { Content, Header } from "./style";
+import { Container, Content, Header } from "./style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
 import LoginForm from "../components/LoginForm";
 import Photo from "../components/Photo";
-import { login, logout } from "../store/login";
+import Button from "../components/Button";
+import Loading from "../components/Loading";
+import { login, autoLogin, logout } from "../store/login";
 import { fetchPhotos } from "../store/photos";
 
 const Main = () => {
@@ -15,8 +17,6 @@ const Main = () => {
 
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
-
-  console.log(state);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -30,45 +30,60 @@ const Main = () => {
   };
 
   useEffect(() => {
+    dispatch(autoLogin());
+  }, [dispatch]);
+
+  useEffect(() => {
     if (state.login.user.data) {
       dispatch(fetchPhotos(page));
     }
-  }, [state.login.user.data, page]);
+  }, [state.login.user.data, page, dispatch]);
 
   useEffect(() => {
     if (state.photos.data) {
       const newPhotos = [...state.photos.data];
       setPhotos([...photos, newPhotos]);
     }
-    return setPassword([]);
   }, [state.photos.data]);
 
-  const content = () => {
-    // if (
-    //   state.login.token.loading ||
-    //   state.login.user.loading ||
-    //   state.photos.loading
-    // ) {
-    //   return <p>Loading....</p>;
-    // }
-
-    if (!state.login.user.data) {
-      return (
-        <Fragment>
-          {state.login.token.loading && <p>Loading...</p>}
-          <LoginForm
-            onSubmit={handleSubmit}
-            setUsername={setUsername}
-            setPassword={setPassword}
-          />
-        </Fragment>
-      );
-    }
-
-    if (state.login.user.data) {
-      if (state.photos.data) {
-        return (
-          <div>
+  return (
+    <Container>
+      <Header>
+        <h1>
+          <FontAwesomeIcon icon="paw" /> Mini Dogs
+        </h1>
+        {state.login.user.data && (
+          <div className="user">
+            <span>{state.login.user.data.username}</span>
+            <Button
+              className="logout"
+              title="Logout"
+              text={<FontAwesomeIcon icon="sign-out-alt" />}
+              type="button"
+              onClick={() => dispatch(logout())}
+            />
+          </div>
+        )}
+      </Header>
+      <Content>
+        {state.login.user.loading ||
+        state.login.token.loading ||
+        state.photos.loading ? (
+          <Loading />
+        ) : (
+          ""
+        )}
+        {!state.login.user.data ? (
+          <Fragment>
+            {state.login.token.loading && <p>Loading...</p>}
+            <LoginForm
+              onSubmit={handleSubmit}
+              setUsername={setUsername}
+              setPassword={setPassword}
+            />
+          </Fragment>
+        ) : (
+          state.photos.data && (
             <ul>
               {photos.map((photo) => {
                 return photo.map(({ id, src, title, acessos }) => {
@@ -78,35 +93,22 @@ const Main = () => {
                 });
               })}
             </ul>
-
-            {state.photos.loading && <p>Loading...</p>}
-            {state.photos.data.length > 0 ? (
-              <button onClick={() => dispatch(logout())}>More Photos</button>
-            ) : (
-              <p>No more Photos</p>
-            )}
-          </div>
-        );
-      }
-    }
-
-    return null;
-  };
-
-  return (
-    <Content>
-      <Header>
-        <h1>
-          <FontAwesomeIcon icon="paw" /> Mini Dogs
-        </h1>
-        {state.login.user.data && (
-          <button onClick={() => (state.login.user.data = null)}>
-            <FontAwesomeIcon icon="sign-out-alt" />
-          </button>
+          )
         )}
-      </Header>
-      {content()}
-    </Content>
+
+        {state.login.user.data && state.photos.data
+          ? state.photos.data.length > 0 && (
+              <Button
+                className="plus"
+                title="Load More Photos"
+                text={<FontAwesomeIcon icon="plus" />}
+                type="button"
+                onClick={() => handleLoadPhotos()}
+              />
+            )
+          : null}
+      </Content>
+    </Container>
   );
 };
 

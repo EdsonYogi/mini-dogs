@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "../Button";
 import { Login, Username, Password } from "./style";
 
 const LoginForm = ({ onSubmit, setUsername, setPassword }) => {
@@ -23,7 +24,7 @@ const LoginForm = ({ onSubmit, setUsername, setPassword }) => {
             onChange={({ target }) => setPassword(target.value)}
           />
         </Password>
-        <button type="submit">Login</button>
+        <Button className="login" title="Login" type="submit" text="Login" />
       </form>
     </Login>
   );

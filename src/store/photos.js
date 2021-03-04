@@ -1,4 +1,4 @@
-import createAsyncSlice from "./createAsyncSlice";
+import createAsyncSlice from "./helpers/createAsyncSlice";
 import { PHOTOS_GET } from "../services/api";
 
 const photos = createAsyncSlice({
